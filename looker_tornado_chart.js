@@ -1,4 +1,13 @@
 looker.plugins.visualizations.add({
+  options: {
+    show_x_scale: {
+      type: "boolean",
+      label: "Show scale?",
+      default: true,
+      order: 0
+    }
+  },
+
   create: function (element, config) {
     console.log("d3:\n", d3)
 
