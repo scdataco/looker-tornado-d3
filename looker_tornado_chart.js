@@ -229,7 +229,7 @@ looker.plugins.visualizations.add({
       .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) + 4 : xRight(d["xMeasure"]) - 4)
       .attr("y", d => y(d["yGroup"]) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
-      .text(d => d["xMeasure"].toLocaleString())
+      .text(d => d["xMeasure"] ? d["xMeasure"].toLocaleString() : 0)
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
 
