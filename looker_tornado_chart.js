@@ -149,7 +149,7 @@ looker.plugins.visualizations.add({
     let rows = Math.ceil(shapedData.length / 2)
     console.log("rows:\n", rows)
 
-    let rowHeight = Math.floor(element.clientHeight / rows)
+    let rowHeight = Math.floor((element.clientHeight - margin.top - margin.bottom) / rows)
     console.log("rowHeight", rowHeight)
 
     let height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
