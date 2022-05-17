@@ -141,7 +141,7 @@ looker.plugins.visualizations.add({
 
 
     // to allow space for the scale
-    let margin = ({ top: 10, right: centreShift, bottom: centreShift, left: 20 })
+    let margin = ({ top: 10, right: centreShift, bottom: 20, left: centreShift })
 
     let width = element.clientWidth
 
