@@ -139,6 +139,7 @@ looker.plugins.visualizations.add({
     let centreSpace = 60
     let centreShift = centreSpace / 2
 
+
     // to allow space for the scale
     let margin = ({ top: 10, right: centreShift, bottom: centreShift, left: 20 })
 
