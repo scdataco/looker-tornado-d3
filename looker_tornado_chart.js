@@ -70,7 +70,7 @@ looker.plugins.visualizations.add({
 
     console.log("pivot stuff:\n", pivotFieldRef, leftCategory, rightCategory)
 
-    yDimension = queryResponse.fields.dimensions[0].name
+    yDimension = queryResponse.fields.dimension_like[0].name
     xMeasure = queryResponse.fields.measure_like[0].name
 
     console.log("yDim:\n", yDimension)
