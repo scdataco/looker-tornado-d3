@@ -210,7 +210,7 @@ looker.plugins.visualizations.add({
       .selectAll("rect")
       .data(shapedData)
       .join("rect")
-      .attr("fill", d => d3.schemeSet1[d["category"] === leftCategory ? 1 : 0])
+      .attr("fill", d => d["category"] === leftCategory ? leftColour : rightColour)
       .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) : xRight(0))
       .attr("y", d => y(d["yGroup"]))
       .attr("width", d => d["category"] === leftCategory ? xLeft(0) - xLeft(d["xMeasure"]) : xRight(d["xMeasure"]) - xRight(0))
@@ -242,7 +242,7 @@ looker.plugins.visualizations.add({
       // .attr("y", y(shapedData[0].age) + y.bandwidth() / 2)
       .attr("y", 10)
       .attr("font-size", 14)
-      .attr("fill", d => d3.schemeSet1[1])
+      .attr("fill", d => leftColour)
       .attr("font-weight", 800)
       .text(leftCategory)
 
@@ -255,7 +255,7 @@ looker.plugins.visualizations.add({
       // .attr("y", y(shapedData[0].age) + y.bandwidth() / 2)
       .attr("y", 10)
       .attr("font-size", 14)
-      .attr("fill", d => d3.schemeSet1[0])
+      .attr("fill", d => rightColour)
       .attr("font-weight", 800)
       .text(rightCategory)
 
