@@ -13,16 +13,9 @@ looker.plugins.visualizations.add({
 
     element.innerHTML = `
       <style>
-        .viz-div, .viz-div a {
-          // Vertical centering
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
-          font-family: sans-serif;
+        #vis {
+        
         }
-
       </style>
     `
 
@@ -91,50 +84,6 @@ looker.plugins.visualizations.add({
       ])
     }, []).reverse()
 
-    console.log("shapedData\n",shapedData)
-
-    // dummy data
-    /*
-    const shapedData = [
-      { age: "<5", sex: leftCategory, value: 75713 },
-      { age: "<5", sex: "F", value: 36305 },
-      { age: "5-9", sex: leftCategory, value: 70147 },
-      { age: "5-9", sex: "F", value: 31835 },
-      { age: "10-14", sex: leftCategory, value: 61873 },
-      { age: "10-14", sex: "F", value: 17913 },
-      { age: "15-19", sex: leftCategory, value: 42624 },
-      { age: "15-19", sex: "F", value: 11857 },
-      { age: "20-24", sex: leftCategory, value: 76412 },
-      { age: "20-24", sex: "F", value: 27820 },
-      { age: "25-29", sex: leftCategory, value: 89596 },
-      { age: "25-29", sex: "F", value: 18414 },
-      { age: "30-34", sex: leftCategory, value: 25791 },
-      { age: "30-34", sex: "F", value: 57848 },
-      { age: "35-39", sex: leftCategory, value: 99569 },
-      { age: "35-39", sex: "F", value: 56213 },
-      { age: "40-44", sex: leftCategory, value: 30986 },
-      { age: "40-44", sex: "F", value: 65142 },
-      { age: "45-49", sex: leftCategory, value: 71984 },
-      { age: "45-49", sex: "F", value: 98384 },
-      { age: "50-54", sex: leftCategory, value: 51409 },
-      { age: "50-54", sex: "F", value: 74081 },
-      { age: "55-59", sex: leftCategory, value: 73646 },
-      { age: "55-59", sex: "F", value: 28301 },
-      { age: "60-64", sex: leftCategory, value: 24852 },
-      { age: "60-64", sex: "F", value: 90829 },
-      { age: "65-69", sex: leftCategory, value: 76271 },
-      { age: "65-69", sex: "F", value: 71175 },
-      { age: "70-74", sex: leftCategory, value: 67513 },
-      { age: "70-74", sex: "F", value: 20208 },
-      { age: "75-79", sex: leftCategory, value: 16432 },
-      { age: "75-79", sex: "F", value: 13697 },
-      { age: "80-84", sex: leftCategory, value: 78691 },
-      { age: "80-84", sex: "F", value: 32738 },
-      { age: "≥85", sex: leftCategory, value: 20771 },
-      { age: "≥85", sex: "F", value: 37981 }
-    ]
-    */
-
     // for making a gap in the middle
     let centreSpace = 60
     let centreShift = centreSpace / 2
@@ -153,36 +102,12 @@ looker.plugins.visualizations.add({
     console.log("rowHeight", rowHeight)
 
     let height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
-    console.log("height", height)
 
     yAxis = g => g
       .attr("transform", `translate(${xLeft(0) - 10},0)`)
       .call(d3.axisRight(y).tickSizeOuter(0))
       .call(g => g.selectAll(".tick text").attr("fill", "black").attr("text-anchor", "middle"))
 
-    // x axis with ticks
-    xAxis = g => g
-      .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(
-        g =>
-          g.append("g")
-            .call(
-              d3.axisBottom(xLeft)
-                .ticks(width / 80, "s")
-              // make space in middle, match to bars
-            ).attr("transform", `translate(-${centreShift},0)`)
-      )
-      .call(
-        g =>
-          g.append("g")
-            .call(
-              d3.axisBottom(xRight)
-                .ticks(width / 80, "s")
-              // make space in middle, match to bars
-            ).attr("transform", `translate(${centreShift},0)`)
-      )
-      .call(g => g.selectAll(".domain").remove())
-      .call(g => g.selectAll(".tick:first-of-type").remove())
 
     y = d3.scaleBand()
       .domain(shapedData.map(d => d["yGroup"]))
@@ -203,7 +128,7 @@ looker.plugins.visualizations.add({
       .html('') // clear existing contents
       .attr("viewBox", [0, 0, width, height])
       .attr("font-family", "sans-serif")
-      .attr("font-size", 10)
+      .attr("font-size", 12)
 
     // bars
     svg.append("g")
@@ -298,5 +223,5 @@ looker.plugins.visualizations.add({
     this._svg = svg
 
     done()
-  }
+  },
 })
