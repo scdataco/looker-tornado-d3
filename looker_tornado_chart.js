@@ -42,6 +42,32 @@ looker.plugins.visualizations.add({
     leftCategory = pivots[0].key
     rightCategory = pivots[1].key
 
+    newOptions = {      
+      ...this.options,
+      left_colour: {
+        label: leftCategory + " Colour",
+        type: "string",
+        display: "color",
+        default: "#B1399E",
+        order: 1
+      },
+      right_colour: {
+        label: rightCategory + " Colour",
+        type: "string",
+        display: "color",
+        default: "#3EB0D5",
+        order: 2
+      },
+    }
+
+    console.log("newOptions:\n", newOptions)
+
+
+    this.trigger('registerOptions', newOptions)
+
+    leftColour = config.left_colour
+    rightColour = config.right_colour
+
     console.log("pivot stuff:\n", pivotFieldRef, leftCategory, rightCategory)
 
     yDimension = queryResponse.fields.dimensions[0].name
