@@ -89,7 +89,7 @@ looker.plugins.visualizations.add({
           "xMeasure": curr[xMeasure][rightCategory]["value"]
         }
       ])
-    }, [])
+    }, []).reverse()
 
     console.log("shapedData\n",shapedData)
 
