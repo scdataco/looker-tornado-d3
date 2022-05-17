@@ -259,10 +259,35 @@ looker.plugins.visualizations.add({
       .attr("font-weight", 800)
       .text(rightCategory)
 
+    // x axis with ticks
+    if (config.show_x_scale) {
+      xAxis = g => g
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(
+          g =>
+            g.append("g")
+              .call(
+                d3.axisBottom(xLeft)
+                  .ticks(width / 80, "s")
+                // make space in middle, match to bars
+              ).attr("transform", `translate(-${centreShift},0)`)
+        )
+        .call(
+          g =>
+            g.append("g")
+              .call(
+                d3.axisBottom(xRight)
+                  .ticks(width / 80, "s")
+                // make space in middle, match to bars
+              ).attr("transform", `translate(${centreShift},0)`)
+        )
+        .call(g => g.selectAll(".domain").remove())
+        .call(g => g.selectAll(".tick:first-of-type").remove())
 
-    svg.append("g")
-      .call(xAxis)
-      .attr("fill", "white")
+      svg.append("g")
+        .call(xAxis)
+        .attr("fill", "white")
+    }
 
     // y axis
     svg.append("g")
