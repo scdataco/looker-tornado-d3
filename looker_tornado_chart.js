@@ -238,7 +238,7 @@ looker.plugins.visualizations.add({
     svg.append("g")
       .call(yAxis)
       // hide bar/ticks
-      .attr("color", "white")
+      .selectAll(".domain").remove()
 
     this._svg = svg
 
