@@ -49,14 +49,19 @@ looker.plugins.visualizations.add({
     console.log("QUERY RESPONSE:\n", queryResponse)
     console.log("DATA:\n", data)
 
-    pivots = queryResponse.pivots
+    const pivots = queryResponse.pivots
 
-    pivotFieldRef = Object.keys(pivots[0].data)[0]
-    leftCategory = pivots[0].key
-    rightCategory = pivots[1].key
+    const pivotFieldRef = Object.keys(pivots[0].data)[0]
+    const leftCategory = pivots[0].key
+    const rightCategory = pivots[1].key
 
-    newOptions = {      
-      ...this.options,
+    const newOptions = {
+      show_x_scale: {
+        type: "boolean",
+        label: "Show scale?",
+        default: true,
+        order: 0
+      },
       left_colour: {
         label: leftCategory + " Colour",
         type: "string",
@@ -78,10 +83,11 @@ looker.plugins.visualizations.add({
 
     this.trigger('registerOptions', newOptions)
 
-    leftColour = config.left_colour
-    rightColour = config.right_colour
+    const leftColour = config.left_colour
+    const rightColour = config.right_colour
 
-    console.log("pivot stuff:\n", pivotFieldRef, leftCategory, rightCategory)
+    const yDimension = queryResponse.fields.dimension_like[0].name
+    const xMeasure = queryResponse.fields.measure_like[0].name
 
     const d3Format = this.formatType(queryResponse.fields.measure_like[0].value_format)
 
@@ -101,42 +107,40 @@ looker.plugins.visualizations.add({
     }, []).reverse()
 
     // for making a gap in the middle
-    let centreSpace = 60
-    let centreShift = centreSpace / 2
+    const centreSpace = 90
+    const centreShift = centreSpace / 2
 
 
     // to allow space for the scale
-    let margin = ({ top: 10, right: centreShift, bottom: 20, left: centreShift })
+    const margin = ({ top: 10, right: centreShift, bottom: 20, left: centreShift })
 
-    let width = element.clientWidth
+    const width = element.clientWidth
 
     // count rows and set height for rows
-    let rows = Math.ceil(shapedData.length / 2)
-    console.log("rows:\n", rows)
+    const rows = Math.ceil(shapedData.length / 2)
+    
+    const rowHeight = Math.floor((element.clientHeight - margin.top - margin.bottom) / rows)
+    
+    const height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
 
-    let rowHeight = Math.floor((element.clientHeight - margin.top - margin.bottom) / rows)
-    console.log("rowHeight", rowHeight)
-
-    let height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
-
-    yAxis = g => g
+    const yAxis = g => g
       .attr("transform", `translate(${xLeft(0) - 10},0)`)
       .call(d3.axisRight(y).tickSizeOuter(0))
       .call(g => g.selectAll(".tick text").attr("fill", "black").attr("text-anchor", "middle"))
 
 
-    y = d3.scaleBand()
+    const y = d3.scaleBand()
       .domain(shapedData.map(d => d["yGroup"]))
       .rangeRound([height - margin.bottom, margin.top])
       .padding(0.1)
 
-    xLeft = d3.scaleLinear()
+    const xLeft = d3.scaleLinear()
       .domain([0, d3.max(shapedData, d => d["xMeasure"])])
       .rangeRound([width / 2, margin.left])
 
     console.log("xLeft:\n", xLeft.domain)
-
-    xRight = d3.scaleLinear()
+    
+    const xRight = d3.scaleLinear()
       .domain(xLeft.domain())
       .rangeRound([width / 2, width - margin.right])
 
@@ -202,7 +206,7 @@ looker.plugins.visualizations.add({
 
     // x axis with ticks
     if (config.show_x_scale) {
-      xAxis = g => g
+      const xAxis = g => g
         .attr("transform", `translate(0,${height - margin.bottom})`)
         .call(
           g =>
