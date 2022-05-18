@@ -51,7 +51,6 @@ looker.plugins.visualizations.add({
 
     const pivots = queryResponse.pivots
 
-    const pivotFieldRef = Object.keys(pivots[0].data)[0]
     const leftCategory = pivots[0].key
     const rightCategory = pivots[1].key
 
