@@ -1,7 +1,7 @@
 looker.plugins.visualizations.add({
-   formatType: function (valueFormat) {
+  formatType: function (valueFormat) {
     if (typeof valueFormat != "string") {
-      return function (x) {return x}
+      return function (x) { return x }
     }
     let format = ""
     switch (valueFormat.charAt(0)) {
@@ -18,8 +18,8 @@ looker.plugins.visualizations.add({
     splitValueFormat = valueFormat.split(".")
     format += '.'
     format += splitValueFormat.length > 1 ? splitValueFormat[1].length : 0
-  
-    switch(valueFormat.slice(-1)) {
+
+    switch (valueFormat.slice(-1)) {
       case '%':
         format += '%'; break
       case '0':
@@ -115,15 +115,19 @@ looker.plugins.visualizations.add({
 
     // count rows and set height for rows
     const rows = Math.ceil(shapedData.length / 2)
-    
+
     const rowHeight = Math.floor((element.clientHeight - margin.top - margin.bottom) / rows)
-    
+
     const height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
 
     const yAxis = g => g
       .attr("transform", `translate(${xLeft(0) - 10},0)`)
       .call(d3.axisRight(y).tickSizeOuter(0))
-      .call(g => g.selectAll(".tick text").attr("fill", "black").attr("text-anchor", "middle"))
+      .call(g => g.selectAll(".tick text")
+        .attr("fill", "black")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 14)
+      )
 
 
     const y = d3.scaleBand()
@@ -135,7 +139,7 @@ looker.plugins.visualizations.add({
       .domain([0, d3.max(shapedData, d => d["xMeasure"])])
       .rangeRound([width / 2, margin.left])
 
-    
+
     const xRight = d3.scaleLinear()
       .domain(xLeft.domain())
       .rangeRound([width / 2, width - margin.right])
