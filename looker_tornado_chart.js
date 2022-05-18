@@ -1,11 +1,31 @@
 looker.plugins.visualizations.add({
-  options: {
-    show_x_scale: {
-      type: "boolean",
-      label: "Show scale?",
-      default: true,
-      order: 0
+   formatType: function (valueFormat) {
+    if (typeof valueFormat != "string") {
+      return function (x) {return x}
     }
+    let format = ""
+    switch (valueFormat.charAt(0)) {
+      case '$':
+        format += '$'; break
+      case '£':
+        format += '£'; break
+      case '€':
+        format += '€'; break
+    }
+    if (valueFormat.indexOf(',') > -1) {
+      format += ','
+    }
+    splitValueFormat = valueFormat.split(".")
+    format += '.'
+    format += splitValueFormat.length > 1 ? splitValueFormat[1].length : 0
+  
+    switch(valueFormat.slice(-1)) {
+      case '%':
+        format += '%'; break
+      case '0':
+        format += 'f'; break
+    }
+    return d3.format(format)
   },
 
   create: function (element, config) {
@@ -63,11 +83,7 @@ looker.plugins.visualizations.add({
 
     console.log("pivot stuff:\n", pivotFieldRef, leftCategory, rightCategory)
 
-    yDimension = queryResponse.fields.dimension_like[0].name
-    xMeasure = queryResponse.fields.measure_like[0].name
-
-    console.log("yDim:\n", yDimension)
-    console.log("xMeasure:\n", xMeasure)
+    const d3Format = this.formatType(queryResponse.fields.measure_like[0].value_format)
 
     shapedData = data.reduce((acc, curr) => {
       return acc.concat([
@@ -154,7 +170,7 @@ looker.plugins.visualizations.add({
       .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) + 4 : xRight(d["xMeasure"]) - 4)
       .attr("y", d => y(d["yGroup"]) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
-      .text(d => d["xMeasure"] ? d["xMeasure"].toLocaleString() : 0)
+      .text(d => d["xMeasure"] ? d3Format(d["xMeasure"]) : 0)
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
 
