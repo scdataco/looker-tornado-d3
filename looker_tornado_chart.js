@@ -78,9 +78,6 @@ looker.plugins.visualizations.add({
       },
     }
 
-    console.log("newOptions:\n", newOptions)
-
-
     this.trigger('registerOptions', newOptions)
 
     const leftColour = config.left_colour
@@ -138,7 +135,6 @@ looker.plugins.visualizations.add({
       .domain([0, d3.max(shapedData, d => d["xMeasure"])])
       .rangeRound([width / 2, margin.left])
 
-    console.log("xLeft:\n", xLeft.domain)
     
     const xRight = d3.scaleLinear()
       .domain(xLeft.domain())
