@@ -148,7 +148,7 @@ looker.plugins.visualizations.add({
       .html('') // clear existing contents
       .attr("viewBox", [0, 0, width, height])
       .attr("font-family", "sans-serif")
-      .attr("font-size", 12)
+      .attr("font-size", '80%')
 
     // bars
     svg.append("g")
