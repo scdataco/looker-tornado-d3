@@ -178,7 +178,7 @@ looker.plugins.visualizations.add({
 
     // bar values
     svg.append("g")
-      .attr("fill", "white")
+      .attr("fill", "#222222")
       .selectAll("text")
       .data(shapedData)
       .join("text")
