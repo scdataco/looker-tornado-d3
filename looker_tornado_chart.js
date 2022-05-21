@@ -95,12 +95,14 @@ looker.plugins.visualizations.add({
         {
           "yGroup": curr[yDimension]["value"],
           "category": leftCategory,
-          "xMeasure": curr[xMeasure][leftCategory]["value"]
+          "xMeasure": curr[xMeasure][leftCategory]["value"],
+          "links": curr[xMeasure][leftCategory]["links"],
         },
         {
           "yGroup": curr[yDimension]["value"],
           "category": rightCategory,
-          "xMeasure": curr[xMeasure][rightCategory]["value"]
+          "xMeasure": curr[xMeasure][rightCategory]["value"],
+          "links": curr[xMeasure][rightCategory]["links"],
         }
       ])
     }, []).reverse()
@@ -121,6 +123,13 @@ looker.plugins.visualizations.add({
     const rowHeight = Math.floor((element.clientHeight - margin.top - margin.bottom) / rows)
 
     const height = shapedData.length / 2 * rowHeight + margin.top + margin.bottom
+
+    const drillClick = (e, d) => {
+      LookerCharts.Utils.openDrillMenu({
+        links: d.links,
+        event: e
+      })
+    }
 
     const yAxis = g => g
       .attr("transform", `translate(${xLeft(0) - 10},0)`)
@@ -164,6 +173,7 @@ looker.plugins.visualizations.add({
       .attr("height", y.bandwidth())
       // shift left/right to allow space for labels
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
+      .on('click', (e, d) => drillClick(e, d))
 
     // bar values
     svg.append("g")
@@ -179,6 +189,7 @@ looker.plugins.visualizations.add({
       .text(d => d["xMeasure"] ? d3Format(d["xMeasure"]) : 0)
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
+      .on('click', (e, d) => drillClick(e, d))
 
     // left category label
     svg.append("text")
