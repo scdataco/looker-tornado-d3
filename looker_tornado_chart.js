@@ -139,6 +139,7 @@ looker.plugins.visualizations.add({
         .attr("text-anchor", "middle")
         .attr("font-size", 14)
       )
+      .call(g => g.selectAll(".tick line").remove())
 
 
     const y = d3.scaleBand()
@@ -240,7 +241,6 @@ looker.plugins.visualizations.add({
               ).attr("transform", `translate(${centreShift},0)`)
         )
         .call(g => g.selectAll(".domain").remove())
-        .call(g => g.selectAll(".tick:first-of-type").remove())
 
       svg.append("g")
         .call(xAxis)
