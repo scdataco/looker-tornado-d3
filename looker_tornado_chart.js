@@ -1,6 +1,6 @@
 looker.plugins.visualizations.add({
   formatType: function (valueFormat) {
-    if (valueFormat == null){
+    if (valueFormat == null) {
       return function (x) { return x.toLocaleString() }
     }
     if (typeof valueFormat != "string") {
