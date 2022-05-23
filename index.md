@@ -6,6 +6,8 @@ This is a basic [Tornado chart](https://en.wikipedia.org/wiki/Tornado_diagram) c
 ## Installation
 To install this visualisation on your Looker instance, go to the visualisations admin page at `[youlookerinstance]//admin/visualizations` and enter [https://scdataco.github.io/looker-tornado-d3/looker_tornado_chart.js](https://scdataco.github.io/looker-tornado-d3/looker_tornado_chart.js) for the 'main' URL. Under dependencies, enter [https://d3js.org/d3.v7.min.js](https://d3js.org/d3.v7.min.js) to ensure that d3 is loaded alongside the main JavaScript file.
 
+Choose a suitable ID e.g. `tornado_chart` and a label e.g. `🌪 Tornado` to show to users when they pick a visualisation.
+
 ## Status/known issues
 - currently in alpha status, so use at your own risk. Looker custom visualisations are loaded in a sandboxed iFrame so there *should* be minimal or no chance of this breaking anything beyond the visualisation not loading or working properly, but this cannot be guaranteed
 - works with results made up of one visible dimension and one visible pivot.
@@ -17,7 +19,7 @@ To install this visualisation on your Looker instance, go to the visualisations 
 - probably various other things to improve/fix/add
 
 ## License
-MIT license, i.e. do what you want with this and it's not my problem :)
+MIT license, i.e. do what you want with this and it's not my problem if it doesn't work or something goes wrong :)
 
 See the [license file](LICENSE).
 
