@@ -14,3 +14,14 @@ To install this visualisation on your Looker instance, go to the visualisations 
 - settings are available for bar colours and showing/hiding x scale
 - x scale doesn't always respect value formats
 - drill menus when clicking bars do work; styles don't currently match Looker's native drill menus
+- probably various other things to improve/fix/add
+
+## License
+MIT license, i.e. do what you want with this and it's not my problem :)
+
+See the [license file](LICENSE)
+
+## Misc
+If you're interested in helping make this better (or want me to build a custom Looker visualisation for you) get in touch via my [website](https://www.scdata.co/contact), or on [LinkedIn](https://www.linkedin.com/in/looker-expert/).
+
+scdata is a trading name of SC IT Consulting Limited.
