@@ -4,7 +4,7 @@ This is a basic [Tornado chart](https://en.wikipedia.org/wiki/Tornado_diagram) c
 <img width="856" alt="image" src="https://user-images.githubusercontent.com/61508254/169885133-641a56e2-b56c-4cb2-a9a3-a72c9eea2839.png">
 
 ## Installation
-To install this visualisation on your Looker instance, go to the visualisations admin page at `[youlookerinstance]//admin/visualizations` and enter `https://scdataco.github.io/looker-tornado-d3/looker_tornado_chart.js` for the 'main' URL. Under dependencies, enter `https://d3js.org/d3.v7.min.js` to ensure that D3 is loaded alongside the main JavaScript file.
+To install this visualisation on your Looker instance, go to the visualisations admin page at `[youlookerinstance]//admin/visualizations` and enter [https://scdataco.github.io/looker-tornado-d3/looker_tornado_chart.js](https://scdataco.github.io/looker-tornado-d3/looker_tornado_chart.js) for the 'main' URL. Under dependencies, enter [https://d3js.org/d3.v7.min.js](https://d3js.org/d3.v7.min.js) to ensure that d3 is loaded alongside the main JavaScript file.
 
 ## Status/known issues
 - currently in alpha status, so use at your own risk. Looker custom visualisations are loaded in a sandboxed iFrame so there *should* be minimal or no chance of this breaking anything beyond the visualisation not loading or working properly, but this cannot be guaranteed
@@ -19,7 +19,7 @@ To install this visualisation on your Looker instance, go to the visualisations 
 ## License
 MIT license, i.e. do what you want with this and it's not my problem :)
 
-See the [license file](LICENSE)
+See the [license file](LICENSE).
 
 ## Misc
 If you're interested in helping make this better (or want me to build a custom Looker visualisation for you) get in touch via my [website](https://www.scdata.co/contact), or on [LinkedIn](https://www.linkedin.com/in/looker-expert/).
