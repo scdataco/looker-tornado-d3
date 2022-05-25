@@ -210,7 +210,7 @@ looker.plugins.visualizations.add({
       // puts values near max of bars
       // .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) + 4 : xRight(d["xMeasure"]) - 4)
       // puts values next to centre
-      .attr("x", d => d["category"] === leftCategory ? xLeft(0) - 6 : xRight(0)+6)
+      .attr("x", d => d["category"] === leftCategory ? xLeft(0) - 6 : xRight(0) + 6)
       .attr("y", d => y(d["yGroup"]) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
       .text(d => d["xMeasure"] ? d3Format(d["xMeasure"]) : 0)
