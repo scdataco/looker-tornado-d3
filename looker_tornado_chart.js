@@ -55,17 +55,6 @@ looker.plugins.visualizations.add({
   },
 
   create: function (element, config) {
-    console.log("d3:\n", d3)
-
-    element.innerHTML = `
-      <style>
-        #vis {
-        
-        }
-      </style>
-    `
-
-    this._tooltip = d3.select(element).append('div').attr('class', 'tornado-tooltip')
     this._svg = d3.select(element).append("svg")
   },
 
