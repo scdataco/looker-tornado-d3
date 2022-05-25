@@ -116,16 +116,16 @@ looker.plugins.visualizations.add({
     shapedData = data.reduce((acc, curr) => {
       return acc.concat([
         {
-          "yGroup": curr[yDimension]["value"],
-          "category": leftCategory,
-          "xMeasure": curr[xMeasure][leftCategory]["value"],
-          "links": curr[xMeasure][leftCategory]["links"],
+          yGroup: curr[yDimension]["value"],
+          category: leftCategory,
+          xMeasure: curr[xMeasure][leftCategory]["value"],
+          links: curr[xMeasure][leftCategory]["links"],
         },
         {
-          "yGroup": curr[yDimension]["value"],
-          "category": rightCategory,
-          "xMeasure": curr[xMeasure][rightCategory]["value"],
-          "links": curr[xMeasure][rightCategory]["links"],
+          yGroup: curr[yDimension]["value"],
+          category: rightCategory,
+          xMeasure: curr[xMeasure][rightCategory]["value"],
+          links: curr[xMeasure][rightCategory]["links"],
         }
       ])
     }, []).reverse()
