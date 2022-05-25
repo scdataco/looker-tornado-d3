@@ -59,7 +59,22 @@ looker.plugins.visualizations.add({
   },
 
   updateAsync: function (data, element, config, queryResponse, details, done) {
-    this.clearErrors()
+    // errors if data isn't right
+    if(this.addError && this.clearErrors){
+      if (!queryResponse.pivots) {
+        this.addError({ title: 'No Pivots', group: "data", message: "Tornado chart requires a pivot and will use the first two columns." })
+        return
+      } 
+      if(queryResponse.fields.dimension_like.length == 0){
+        this.addError({ title: 'No Dimensions', group: "data", message: "Tornado chart requires an un-pivoted dimension." })
+        return
+      }
+      if(queryResponse.fields.measure_like.length == 0){
+        this.addError({ title: 'No Measures', group: "data", message: "Tornado chart requires a measure." })
+        return
+      }      
+      this.clearErrors("data")      
+    }
 
     console.log("QUERY RESPONSE:\n", queryResponse)
     console.log("DATA:\n", data)
