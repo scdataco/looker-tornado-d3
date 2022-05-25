@@ -64,10 +64,13 @@ looker.plugins.visualizations.add({
     console.log("QUERY RESPONSE:\n", queryResponse)
     console.log("DATA:\n", data)
 
+    const pivotFieldRef = queryResponse.fields.pivots[0].name
     const pivots = queryResponse.pivots
 
     const leftCategory = pivots[0].key
     const rightCategory = pivots[1].key
+    const leftCategoryLabel = pivots[0].data[pivotFieldRef]
+    const rightCategoryLabel = pivots[1].data[pivotFieldRef]
 
     const newOptions = {
       show_x_scale: {
@@ -77,14 +80,14 @@ looker.plugins.visualizations.add({
         order: 1
       },
       left_colour: {
-        label: leftCategory + " Colour",
+        label: leftCategoryLabel + " Colour",
         type: "string",
         display: "color",
         default: "#FBB555",
         order: 2
       },
       right_colour: {
-        label: rightCategory + " Colour",
+        label: rightCategoryLabel + " Colour",
         type: "string",
         display: "color",
         default: "#3EB0D5",
@@ -218,7 +221,7 @@ looker.plugins.visualizations.add({
       .attr("font-size", 14)
       .attr("fill", d => leftColour)
       .attr("font-weight", 800)
-      .text(leftCategory)
+      .text(leftCategoryLabel)
 
     // right category label
     svg.append("text")
@@ -231,7 +234,7 @@ looker.plugins.visualizations.add({
       .attr("font-size", 14)
       .attr("fill", d => rightColour)
       .attr("font-weight", 800)
-      .text(rightCategory)
+      .text(rightCategoryLabel)
 
     // x axis with ticks
     if (config.show_x_scale) {
