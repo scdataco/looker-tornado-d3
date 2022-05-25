@@ -1,4 +1,27 @@
 looker.plugins.visualizations.add({
+  options: {
+    show_x_scale: {
+      type: "boolean",
+      label: "Show scale?",
+      default: false,
+      order: 1
+    },
+    left_colour: {
+      label: "Left Bars Colour",
+      type: "string",
+      display: "color",
+      default: "#FBB555",
+      order: 2
+    },
+    right_colour: {
+      label: "Right Bars Colour",
+      type: "string",
+      display: "color",
+      default: "#3EB0D5",
+      order: 3
+    },
+  },
+
   formatType: function (valueFormat) {
     if (valueFormat == null) {
       return function (x) { return x.toLocaleString() }
