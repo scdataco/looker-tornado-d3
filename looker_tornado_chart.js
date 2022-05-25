@@ -85,21 +85,21 @@ looker.plugins.visualizations.add({
         type: "boolean",
         label: "Show scale?",
         default: true,
-        order: 0
+        order: 1
       },
       left_colour: {
         label: leftCategory + " Colour",
         type: "string",
         display: "color",
-        default: "#B1399E",
-        order: 1
+        default: "#FBB555",
+        order: 2
       },
       right_colour: {
         label: rightCategory + " Colour",
         type: "string",
         display: "color",
         default: "#3EB0D5",
-        order: 2
+        order: 3
       },
     }
 
