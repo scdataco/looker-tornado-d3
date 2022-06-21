@@ -1,5 +1,5 @@
 # Looker Tornado Chart Visualisation
-This is a basic [Tornado chart](https://en.wikipedia.org/wiki/Tornado_diagram) custom visualisation for [Looker](https://www.looker.com/), using Looker's [custom visualisation API](https://github.com/looker-open-source/custom_visualizations_v2/), written/provided by [scdata](https://www.scdata.com).
+This is a basic [Tornado chart](https://en.wikipedia.org/wiki/Tornado_diagram) custom visualisation for [Looker](https://www.looker.com/), using Looker's [custom visualisation API](https://github.com/looker-open-source/custom_visualizations_v2/), written/provided by [scdata](https://www.scdata.co).
 
 <img width="856" alt="image" src="https://user-images.githubusercontent.com/61508254/169885133-641a56e2-b56c-4cb2-a9a3-a72c9eea2839.png">
 
