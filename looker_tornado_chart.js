@@ -22,38 +22,6 @@ looker.plugins.visualizations.add({
     },
   },
 
-  formatType: function (valueFormat) {
-    if (valueFormat == null) {
-      return function (x) { return x.toLocaleString() }
-    }
-    if (typeof valueFormat != "string") {
-      return function (x) { return x }
-    }
-    let format = ""
-    switch (valueFormat.charAt(0)) {
-      case '$':
-        format += '$'; break
-      case '£':
-        format += '£'; break
-      case '€':
-        format += '€'; break
-    }
-    if (valueFormat.indexOf(',') > -1) {
-      format += ','
-    }
-    splitValueFormat = valueFormat.split(".")
-    format += '.'
-    format += splitValueFormat.length > 1 ? splitValueFormat[1].length : 0
-
-    switch (valueFormat.slice(-1)) {
-      case '%':
-        format += '%'; break
-      case '0':
-        format += 'f'; break
-    }
-    return d3.format(format)
-  },
-
   create: function (element, config) {
     this._svg = d3.select(element).append("svg")
   },
@@ -118,20 +86,20 @@ looker.plugins.visualizations.add({
     const yDimension = queryResponse.fields.dimension_like[0].name
     const xMeasure = queryResponse.fields.measure_like[0].name
 
-    const d3Format = this.formatType(queryResponse.fields.measure_like[0].value_format)
-
     shapedData = data.reduce((acc, curr) => {
       return acc.concat([
         {
           yGroup: curr[yDimension]["value"],
           category: leftCategory,
           xMeasure: curr[xMeasure][leftCategory]["value"],
+          rendered: curr[xMeasure][leftCategory]["rendered"],
           links: curr[xMeasure][leftCategory]["links"],
         },
         {
           yGroup: curr[yDimension]["value"],
           category: rightCategory,
           xMeasure: curr[xMeasure][rightCategory]["value"],
+          rendered: curr[xMeasure][rightCategory]["rendered"],
           links: curr[xMeasure][rightCategory]["links"],
         }
       ])
@@ -220,7 +188,7 @@ looker.plugins.visualizations.add({
       .attr("x", d => d["category"] === leftCategory ? xLeft(0) - 6 : xRight(0) + 6)
       .attr("y", d => y(d["yGroup"]) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
-      .text(d => d["xMeasure"] ? d3Format(d["xMeasure"]) : 0)
+      .text(d => d["rendered"] ? d["rendered"] : d["xMeasure"])
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
       .on('click', (e, d) => drillClick(e, d))
