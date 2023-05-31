@@ -8,8 +8,6 @@ To install this visualisation on your Looker instance, go to the visualisations 
 
 Choose a suitable ID e.g. `tornado_chart` and a label e.g. `🌪 Tornado` to show to users when they pick a visualisation.
 
-**Note: it seems that Looker's [New Explore Visualisations beta lab feature](https://cloud.google.com/looker/docs/admin-panel-general-labs#new_explore_visualizations) causes the drill menu to not be styled correctly. Turning this lab off appears to resolve this issues.**
-
 ## Status/known issues
 - currently in alpha status, so use at your own risk. Looker custom visualisations are loaded in a sandboxed iFrame so there *should* be minimal or no chance of this breaking anything beyond the visualisation not loading or working properly, but this cannot be guaranteed
 - works with results made up of one visible dimension, one visible pivot and the first visible measure/measure-like calculation.
