@@ -28,33 +28,33 @@ looker.plugins.visualizations.add({
 
   updateAsync: function (data, element, config, queryResponse, details, done) {
     // errors if data isn't right
-    if(this.addError && this.clearErrors){
+    if (this.addError && this.clearErrors) {
       if (!queryResponse.pivots) {
-        this.addError({ title: 'No Pivots', group: "data", message: "Tornado chart requires a pivot and will use the first two columns." })
+        this.addError({ title: 'No Pivots', group: "data", message: "Tornado chart requires a pivot and will use the first two visible columns." })
         return
-      } 
-      if(queryResponse.fields.dimension_like.length == 0){
+      }
+      if (queryResponse.fields.dimension_like.length == 0) {
         this.addError({ title: 'No Dimensions', group: "data", message: "Tornado chart requires an un-pivoted dimension." })
         return
       }
-      if(queryResponse.fields.measure_like.length == 0){
+      if (queryResponse.fields.measure_like.length == 0) {
         this.addError({ title: 'No Measures', group: "data", message: "Tornado chart requires a measure." })
         return
-      }      
-      this.clearErrors("data")      
+      }
+      this.clearErrors("data")
     }
 
-    console.log("QUERY RESPONSE:\n", queryResponse)
-    console.log("DATA:\n", data)
+    console.log("Query response:\n", queryResponse)
 
-    const pivotFieldRef = queryResponse.fields.pivots[0].name
+    const pivotName = queryResponse.fields.pivots[0].name
     const pivots = queryResponse.pivots
 
     const leftCategory = pivots[0].key
     const rightCategory = pivots[1].key
-    const leftCategoryLabel = pivots[0].data[pivotFieldRef]
-    const rightCategoryLabel = pivots[1].data[pivotFieldRef]
+    const leftCategoryLabel = pivots[0].data[pivotName]
+    const rightCategoryLabel = pivots[1].data[pivotName]
 
+    // replace the options to include the series names
     const newOptions = {
       show_x_scale: {
         type: "boolean",
@@ -83,24 +83,24 @@ looker.plugins.visualizations.add({
     const leftColour = config.left_colour
     const rightColour = config.right_colour
 
-    const yDimension = queryResponse.fields.dimension_like[0].name
-    const xMeasure = queryResponse.fields.measure_like[0].name
+    const dimension = queryResponse.fields.dimension_like[0].name
+    const measure = queryResponse.fields.measure_like[0].name
 
     shapedData = data.reduce((acc, curr) => {
       return acc.concat([
         {
-          yGroup: curr[yDimension]["value"],
+          yGroup: curr[dimension]["value"],
           category: leftCategory,
-          xMeasure: curr[xMeasure][leftCategory]["value"],
-          rendered: curr[xMeasure][leftCategory]["rendered"],
-          links: curr[xMeasure][leftCategory]["links"],
+          measure: curr[measure][leftCategory]["value"],
+          rendered: curr[measure][leftCategory]["rendered"],
+          links: curr[measure][leftCategory]["links"],
         },
         {
-          yGroup: curr[yDimension]["value"],
+          yGroup: curr[dimension]["value"],
           category: rightCategory,
-          xMeasure: curr[xMeasure][rightCategory]["value"],
-          rendered: curr[xMeasure][rightCategory]["rendered"],
-          links: curr[xMeasure][rightCategory]["links"],
+          measure: curr[measure][rightCategory]["value"],
+          rendered: curr[measure][rightCategory]["rendered"],
+          links: curr[measure][rightCategory]["links"],
         }
       ])
     }, []).reverse()
@@ -146,7 +146,7 @@ looker.plugins.visualizations.add({
       .padding(0.1)
 
     const xLeft = d3.scaleLinear()
-      .domain([0, d3.max(shapedData, d => d["xMeasure"])])
+      .domain([0, d3.max(shapedData, d => d["measure"])])
       .rangeRound([width / 2, margin.left])
 
 
@@ -166,9 +166,9 @@ looker.plugins.visualizations.add({
       .data(shapedData)
       .join("rect")
       .attr("fill", d => d["category"] === leftCategory ? leftColour : rightColour)
-      .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) : xRight(0))
+      .attr("x", d => d["category"] === leftCategory ? xLeft(d["measure"]) : xRight(0))
       .attr("y", d => y(d["yGroup"]))
-      .attr("width", d => d["category"] === leftCategory ? xLeft(0) - xLeft(d["xMeasure"]) : xRight(d["xMeasure"]) - xRight(0))
+      .attr("width", d => d["category"] === leftCategory ? xLeft(0) - xLeft(d["measure"]) : xRight(d["measure"]) - xRight(0))
       .attr("height", y.bandwidth())
       // shift left/right to allow space for labels
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
@@ -181,15 +181,12 @@ looker.plugins.visualizations.add({
       .selectAll("text")
       .data(shapedData)
       .join("text")
-      // .attr("text-anchor", "middle")
       .attr("text-anchor", d => d["category"] === leftCategory ? "end" : "start")
-      // puts values near max of bars
-      // .attr("x", d => d["category"] === leftCategory ? xLeft(d["xMeasure"]) + 4 : xRight(d["xMeasure"]) - 4)
       // puts values next to centre
       .attr("x", d => d["category"] === leftCategory ? xLeft(0) - 6 : xRight(0) + 6)
       .attr("y", d => y(d["yGroup"]) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
-      .text(d => d["rendered"] ? d["rendered"] : d["xMeasure"])
+      .text(d => d["rendered"] ? d["rendered"] : d["measure"])
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
       .attr("cursor", "pointer")
@@ -198,10 +195,8 @@ looker.plugins.visualizations.add({
     // left category label
     svg.append("text")
       .attr("text-anchor", "end")
-      // .attr("fill", "blue")
       .attr("dy", "0.35em")
       .attr("x", xLeft(0) - centreShift)
-      // .attr("y", y(shapedData[0].age) + y.bandwidth() / 2)
       .attr("y", 6)
       .attr("font-size", 14)
       .attr("fill", d => leftColour)
@@ -211,10 +206,8 @@ looker.plugins.visualizations.add({
     // right category label
     svg.append("text")
       .attr("text-anchor", "start")
-      // .attr("fill", "white")
       .attr("dy", "0.35em")
       .attr("x", xRight(0) + centreShift)
-      // .attr("y", y(shapedData[0].age) + y.bandwidth() / 2)
       .attr("y", 6)
       .attr("font-size", 14)
       .attr("fill", d => rightColour)
