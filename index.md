@@ -11,11 +11,10 @@ Choose a suitable ID e.g. `tornado_chart` and a label e.g. `🌪 Tornado` to sho
 ## Status/known issues
 - currently in alpha status, so use at your own risk. Looker custom visualisations are loaded in a sandboxed iFrame so there *should* be minimal or no chance of this breaking anything beyond the visualisation not loading or working properly, but this cannot be guaranteed
 - works with results made up of one visible dimension, one visible pivot and the first visible measure/measure-like calculation.
-- ~no friendly error messages yet~ errors if there are no pivots/dimensions/measures in the query. See note above about New Explore visualisations lab.
-- Value formats work but may not behave correctly e.g. number of decimals is not always respected properly
+- errors if there are no pivots/dimensions/measures in the query
 - settings are available for bar colours and showing/hiding x scale
-- x scale doesn't always respect value formats
-- drill menus when clicking bars do work ~styles don't currently match Looker's native drill menus~ (see note above about New Explore visualisations lab)
+- x scale doesn't respect value formats
+- drill menus when clicking bars
 - probably various other things to improve/fix/add
 
 ## License
