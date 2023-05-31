@@ -172,6 +172,7 @@ looker.plugins.visualizations.add({
       .attr("height", y.bandwidth())
       // shift left/right to allow space for labels
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
+      .attr("cursor", "pointer")
       .on('click', (e, d) => drillClick(e, d))
 
     // bar values
@@ -191,6 +192,7 @@ looker.plugins.visualizations.add({
       .text(d => d["rendered"] ? d["rendered"] : d["xMeasure"])
       // shift left/right match bar shift
       .attr("transform", d => d["category"] === leftCategory ? `translate(-${centreShift},0)` : `translate(${centreShift},0)`)
+      .attr("cursor", "pointer")
       .on('click', (e, d) => drillClick(e, d))
 
     // left category label
